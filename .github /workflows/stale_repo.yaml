@@ -17,7 +17,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         ORGANIZATION: ${{ secrets.ORGANIZATION }}
         EXEMPT_TOPICS: "keep,template"
-        INACTIVE_DAYS: 365
+        INACTIVE_DAYS: 0
 
     - name: Create issue
       uses: peter-evans/create-issue-from-file@v4
