@@ -1,0 +1,28 @@
+name: stale repo identifier
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '3 2 1 * *'
+
+jobs:
+  build:
+    name: stale repo identifier
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run stale_repos tool
+      uses: github/stale-repos@v1
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        ORGANIZATION: ${{ secrets.ORGANIZATION }}
+        EXEMPT_TOPICS: "keep,template"
+        INACTIVE_DAYS: 365
+
+    - name: Create issue
+      uses: peter-evans/create-issue-from-file@v4
+      with:
+        title: Stale repository report
+        content-filepath: ./stale_repos.md
+        assignees: <YOUR_GITHUB_HANDLE_HERE>
+        token: ${{ secrets.GITHUB_TOKEN }}
