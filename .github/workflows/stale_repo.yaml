@@ -15,7 +15,7 @@ jobs:
       uses: github/stale-repos@v1
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        ORGANIZATION: "shmishra99"
+        ORGANIZATION: ""
         EXEMPT_TOPICS: "keep,template"
         INACTIVE_DAYS: 0
 
