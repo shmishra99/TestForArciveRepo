@@ -27,8 +27,8 @@ jobs:
           for (const repo of repos) {
             let url = repo.url
             let spliturl = url.split('/')
-            let owner = spliturl[spliutl.length-2]
-            let topic = spliturl[spliutl.length-1]
+            let owner = spliturl[spliurl.length-2]
+            let topic = spliturl[spliurl.length-1]
              
              github.rest.repos.update({
             owner: owner,
