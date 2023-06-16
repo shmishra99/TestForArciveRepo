@@ -1,0 +1,37 @@
+name: stale repo identifier
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '3 2 1 * *'
+
+jobs:
+  build:
+    name: stale repo identifier
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run stale_repos tool
+      id: stale-repos
+      uses: github/stale-repos@v1
+      env:
+        GH_TOKEN: ${{ secrets.TOK }}
+        INACTIVE_DAYS: 100
+
+    - name: Print output of stale_repos tool
+      run: echo "${{ steps.stale-repos.outputs.inactiveRepos }}"
+    - uses: actions/github-script@v6
+      with:
+        script: |
+          const repos = ${{ steps.stale-repos.outputs.inactiveRepos }}
+          for (const repo of repos) {
+            console.log(repo);
+            const issue = await github.rest.issues.create({
+              owner: <ORG_OWNER>,
+              repo: <REPOSITORY>,
+              title: 'Stale repo' + repo.url,
+              body: 'This repo is stale. Please contact the owner to make it active again.',
+            });
+            console.log(issue);
+          }
+        github-token: ${{ secrets.GH_TOKEN }}
