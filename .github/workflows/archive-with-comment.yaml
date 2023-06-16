@@ -25,6 +25,16 @@ jobs:
         script: |
           const repos = ${{ steps.stale-repos.outputs.inactiveRepos }}
           for (const repo of repos) {
+            let url = repo.url
+            let spliturl = url.split('/')
+            let owner = spliturl[spliutl.length-2]
+            let topic = spliturl[spliutl.length-1]
+             
+             github.rest.repos.update({
+            owner: owner,
+            repo: topic,
+            archived:true
+            });
             console.log(repo);
               }
         github-token: ${{ secrets.TOK }}
