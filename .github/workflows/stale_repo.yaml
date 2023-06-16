@@ -41,3 +41,15 @@ jobs:
         content-filepath: ./stale_repos.md
         assignees: "shmishra99"
         token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Archive Repo   
+    - uses: actions/checkout@v3
+    - uses: actions/github-script@v6
+      with:
+          script: |
+            return github.rest.repos.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            archive: true
+               });
+
+            
