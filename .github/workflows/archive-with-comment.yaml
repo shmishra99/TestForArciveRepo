@@ -44,3 +44,11 @@ jobs:
                });
       
         github-token: ${{ secrets.TOK }}
+        
+    - name: Create issue
+      uses: peter-evans/create-issue-from-file@v4
+      with:
+        title: Stale repository report
+        content-filepath: ./stale_repos.md
+        assignees: 'shmishra99'
+        token: ${{ secrets.GITHUB_TOKEN }}     
