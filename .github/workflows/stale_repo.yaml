@@ -49,7 +49,6 @@ jobs:
             return github.rest.repos.update({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            archive: true
                });
 
             
