@@ -45,7 +45,7 @@ jobs:
     - uses: actions/github-script@v6
       with:
           script: |
-            console.log(${{ secrets.TOK }})
+            console.log(${token})
             return github.rest.repos.update({
             owner: context.repo.owner,
             repo: context.repo.repo,
