@@ -37,4 +37,10 @@ jobs:
             });
             console.log(repo);
               }
+              
+          github.rest.repos.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+               });
+      
         github-token: ${{ secrets.TOK }}
