@@ -1,0 +1,24 @@
+name: stale repo identifier
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '3 2 1 * *'
+jobs:
+  build:
+    name: stale repo identifier
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/github-script@v6
+      with:
+          github-token: ${{ secrets.TOK }}
+          script: |
+            return github.rest.repos.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            archive:true
+               });
+
+            
