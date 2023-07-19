@@ -16,7 +16,7 @@ jobs:
       uses: github/stale-repos@v1
       env:
         GH_TOKEN: ${{ secrets.TOK }}
-        INACTIVE_DAYS: 120
+        INACTIVE_DAYS: 90
 
     - name: Print output of stale_repos tool
       run: echo "${{ steps.stale-repos.outputs.inactiveRepos }}"
