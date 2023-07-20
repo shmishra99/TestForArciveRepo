@@ -7,9 +7,6 @@ on:
 
 jobs:
   build:
-    name: stale repo identifier
-    runs-on: ubuntu-latest
-
     steps:
     - name: Print output of stale_repos tool
     - uses: actions/github-script@v6
