@@ -69,7 +69,7 @@ module.exports = async ({ github, context }) => {
     templateIssue = templateIssue + "| Repository URL | Days Inactive | Last Push Date |\n"
     templateIssue = templateIssue + " | --- | ---: | ---: | "     
     for(let inactive of inactiveRepos){
-        templateIssue =   templateIssue + "| ${inactive.repo_details.html_url} | ${inactive.inactiveDays}| 2020-1-30 | \n"
+        templateIssue =   templateIssue + "|" +  inactive.repo_details.html_url + "|" +  inactive.inactiveDays + "|" +  "2020-1-30" + "|\n"
 
     }
    
