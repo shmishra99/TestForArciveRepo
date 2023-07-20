@@ -28,7 +28,6 @@ module.exports = async ({ github, context }) => {
 
       
       let listRepoIssue = listRepoIssueData.data[0];
-      console.log("line 30",listRepoIssueData)
       if(listRepoIssueData)
        getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
       else 
