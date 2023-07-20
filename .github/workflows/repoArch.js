@@ -3,7 +3,7 @@
 module.exports = async ({ github, context }) => {
 
    let arr = [];
-   for(let i=1;i<3;i++){
+   for(let i=1;i<4;i++){
    let repos =   await github.rest.repos.listForOrg({
                     org: "tensorflow",
                     per_page:100,
