@@ -14,7 +14,6 @@ module.exports = async ({ github, context }) => {
         owner: "tensorflow",
         repo: repo.name,
         per_page: 2,
-        page: i,
       });
 
       let events =eventsData.data;
