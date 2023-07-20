@@ -27,7 +27,7 @@ module.exports = async ({ github, context }) => {
       });
 
       let listRepoIssue = listRepoIssueData.data[0];
-      console.log("line 30",listRepoIssue)
+      console.log("line 30",listRepoIssueData)
       getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
       // fetch the last update date if it is less then 90 days then ignore else archive and continue.
       try {
