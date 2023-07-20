@@ -1,6 +1,6 @@
 module.exports = async ({ github, context }) => {
   let arr = [];
-  let events = [];
+  let eventsArr = [];
   for (let i = 1; i < 4; i++) {
     let reposData = await github.rest.repos.listForOrg({
       org: "tensorflow",
@@ -16,15 +16,14 @@ module.exports = async ({ github, context }) => {
         per_page: 2,
         page: i,
       });
-      console.log("Event",eventsData)
       let events = eventsData.data;
       let lastEvent = events[0];
-      events.push(lastEvent);
+      eventsArr.push(lastEvent);
     }
     
     arr.push(...reposData.data);
   }
 
   console.log("rep", arr.length);
-  console.log(events)
+  console.log(eventsArr)
 };
