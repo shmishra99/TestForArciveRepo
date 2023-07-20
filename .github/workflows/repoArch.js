@@ -26,9 +26,13 @@ module.exports = async ({ github, context }) => {
         sort: "updated",
       });
 
+      
       let listRepoIssue = listRepoIssueData.data[0];
       console.log("line 30",listRepoIssueData)
-      getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
+      if(listRepoIssueData)
+       getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
+      else 
+        getTimeDiffEvent =  numberOfDaysInactive * 1000
       // fetch the last update date if it is less then 90 days then ignore else archive and continue.
       try {
         //get the latest relesedata
