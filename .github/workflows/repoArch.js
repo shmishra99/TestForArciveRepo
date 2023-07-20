@@ -1,7 +1,7 @@
 module.exports = async ({ github, context }) => {
   let inactiveRepos = [];
   let numberOfDaysInactive = 9;
-  
+  let lastActive; 
 
   for (let i = 1; i < 4; i++) {
     //fetch all the repos from 'tensorflow organization'
@@ -19,7 +19,7 @@ module.exports = async ({ github, context }) => {
       }
       let getTimeDiffEvent;
       let timeDifferneceRelese; 
-      let lastActive; 
+      
       // List all the pull request and issues identify pull request by 'pull_request' key sort by update_at
       //It will also cover comment event.
     
@@ -74,7 +74,7 @@ module.exports = async ({ github, context }) => {
     templateIssue = templateIssue + "| Repository URL | Days Inactive | Last Push Date |\n"
     templateIssue = templateIssue + " | --- | ---: | ---: |\n"     
     for(let inactive of inactiveRepos){
-        templateIssue =   templateIssue + " | " +  inactive.repo_details.html_url + " | " +  inactive.inactiveDays + " | " +  "2020-1-30" + " |\n"
+        templateIssue =   templateIssue + " | " +  inactive.repo_details.html_url + " | " +  inactive.inactiveDays + " | " +  lastActive + " |\n"
 
     }
    
