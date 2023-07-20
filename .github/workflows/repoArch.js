@@ -11,7 +11,7 @@ module.exports = async ({ github, context }) => {
       page: i,
     });
     const repos = reposData.data;
-
+    
     for (let repo of repos) {
       let repoObj  = {
          repo_details: repo,
@@ -25,7 +25,11 @@ module.exports = async ({ github, context }) => {
         repo: repo.name,
         sort: "updated",
       });
-
+      
+       if(repo.name == 'tfrc'){
+           console.log("archive data repo",listRepoIssueData)
+           return
+       }
       
       let listRepoIssue = listRepoIssueData.data[0];
       if(listRepoIssue)
