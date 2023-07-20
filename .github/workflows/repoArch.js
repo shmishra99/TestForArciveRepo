@@ -1,18 +1,30 @@
-
-
 module.exports = async ({ github, context }) => {
+  let arr = [];
+  let events = [];
+  for (let i = 1; i < 4; i++) {
+    let reposData = await github.rest.repos.listForOrg({
+      org: "tensorflow",
+      per_page: 100,
+      page: i,
+    });
+    const repos = reposData.data;
 
-   let arr = [];
-   for(let i=1;i<4;i++){
-   let repos =   await github.rest.repos.listForOrg({
-                    org: "tensorflow",
-                    per_page:100,
-                    page:i
-                })
-      arr.push(...repos.data)
-   }
-   console.log("rep",arr.length)
-   
-   
-   
-}
+    for (let repo of repos) {
+      let eventsData = await github.rest.activity.listRepoEvents({
+        owner: "tensorflow",
+        repo: repo.name,
+        per_page: 100,
+        page: i,
+      });
+
+      let events = eventsData.data;
+      let lastEvent = events[0];
+      events.push(lastEvent);
+    }
+    
+    arr.push(...reposData.data);
+  }
+
+  console.log("rep", arr.length);
+  console.log(events)
+};
