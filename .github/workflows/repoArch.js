@@ -72,7 +72,7 @@ module.exports = async ({ github, context }) => {
 
      
     for(let inactive of inactiveRepos){
-          templateIssue + `| ${inactive.repo_details.html_url} | ${inactive.inactiveDays}| 2020-1-30 | \n`
+        templateIssue =   templateIssue + `| ${inactive.repo_details.html_url} | ${inactive.inactiveDays}| 2020-1-30 | \n`
 
     }
    
