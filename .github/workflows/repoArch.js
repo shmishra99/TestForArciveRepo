@@ -3,7 +3,7 @@
 module.exports = async ({ github, context }) => {
 
    let repos =   await github.rest.repos.listForOrg({
-                    owner: "tensorflow",
+                    org: "tensorflow",
                  
                 })
    console.log("rep",repos)
