@@ -16,7 +16,9 @@ module.exports = async ({ github, context }) => {
         per_page: 2,
         page: i,
       });
+
       let events = eventsData.data;
+      console.log(events)
       let lastEvent = events[0];
       if(!lastEvent)
        eventsArr.push(lastEvent);
