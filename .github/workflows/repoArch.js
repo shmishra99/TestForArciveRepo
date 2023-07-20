@@ -20,8 +20,8 @@ module.exports = async ({ github, context }) => {
       let events =eventsData.data;
       // console.log(events)
       let lastEvent = events[0];
-      console.log(lastEvent)
-      if(!lastEvent)
+    
+      if(lastEvent)
        eventsArr.push(lastEvent);
       else 
         {
@@ -29,7 +29,6 @@ module.exports = async ({ github, context }) => {
               repo:repo.name,
               owner: "tensorflow",
               events:"No event"
-
          } 
          eventsArr.push(noEvents)
         } 
@@ -39,5 +38,5 @@ module.exports = async ({ github, context }) => {
   }
 
 //   console.log("rep", arr.length);
-     console.log(eventsArr)
+     console.log("events Arrya", eventsArr)
 };
