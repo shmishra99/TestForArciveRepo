@@ -18,7 +18,6 @@ module.exports = async ({ github, context }) => {
       }
       let getTimeDiffEvent;
       let timeDifferneceRelese; 
-      
       // List all the pull request and issues identify pull request by 'pull_request' key sort by update_at
       //It will also cover comment event.
       let listRepoIssueData = await github.rest.issues.listForRepo({
@@ -28,6 +27,7 @@ module.exports = async ({ github, context }) => {
       });
 
       let listRepoIssue = listRepoIssueData.data[0];
+      console.log("line 30",listRepoIssue)
       getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
       // fetch the last update date if it is less then 90 days then ignore else archive and continue.
       try {
@@ -51,8 +51,6 @@ module.exports = async ({ github, context }) => {
               }
               else 
               repoObj["inactiveDays"] = timeDifferneceRelese
-         
-
       }
       if(repoObj["inactiveDays"])
          inactiveRepos.push(repoObj)
