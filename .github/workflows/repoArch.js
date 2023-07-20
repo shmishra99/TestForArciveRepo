@@ -35,8 +35,10 @@ module.exports = async ({ github, context }) => {
        getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
        lastActive = listRepoIssue.updated_at
       }
-      else 
+      else {
+         lastActive = repo.created_at
         getTimeDiffEvent =  numberOfDaysInactive * 1000
+      }
       // fetch the last update date if it is less then 90 days then ignore else archive and continue.
       try {
         //get the latest relesedata
@@ -49,6 +51,7 @@ module.exports = async ({ github, context }) => {
          lastActive = getLatestRelease.updated_at
       } catch (e) {
         timeDifferneceRelese = numberOfDaysInactive * 1000   // make it older
+        lastActive = repo.created_at
         console.log("no relese.",e);
       }
       
@@ -71,10 +74,10 @@ module.exports = async ({ github, context }) => {
      
     let templateIssue = "# Inactive Repositories \n" 
     templateIssue = templateIssue + " The following repos have not had no activity for more than"  + numberOfDaysInactive + "days:\n"
-    templateIssue = templateIssue + "| Repository URL | Days Inactive | Last Push Date |\n"
+    templateIssue = templateIssue + "| Repository URL | Days Inactive | Last Active Date |\n"
     templateIssue = templateIssue + " | --- | ---: | ---: |\n"     
     for(let inactive of inactiveRepos){
-        templateIssue =   templateIssue + " | " +  inactive.repo_details.html_url + " | " +  inactive.inactiveDays + " | " +  lastActive + " |\n"
+        templateIssue =   templateIssue + " | " +  inactive.repo_details.html_url + " | " +  Math.floor(inactive.inactiveDays) + " | " +  lastActive + " |\n"
 
     }
    
