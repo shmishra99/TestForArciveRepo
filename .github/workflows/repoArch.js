@@ -63,7 +63,27 @@ module.exports = async ({ github, context }) => {
 
   }
     console.log("events Arrya", inactiveRepos);
-    
+     
+    let templateIssue = `The following repos have not had a activity for more than 3 days:
+
+    | Repository URL | Days Inactive | Last Push Date |
+    | --- | ---: | ---: | 
+    | https://github.com/github/.github | 5 | 2020-1-30 | \n`
+
+     
+    for(let inactive of inactiveRepos){
+          templateIssue + `| ${inactive.html_url} | ${inactive.inactiveDays}| 2020-1-30 | \n`
+
+    }
+   
+    await github.rest.issues.create({
+   
+      owner:'shmishra99',
+      repo:'TestForArciveRepo',
+      title:'Stale Repo by API',
+      body:templateIssue
+      
+    });
 
 };
 
