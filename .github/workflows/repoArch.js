@@ -29,7 +29,7 @@ module.exports = async ({ github, context }) => {
         owner: "tensorflow",
         repo: repo.name,
       });
-      let getLatestRelease = getLatestReleaseData.data[0];
+      let getLatestRelease = getLatestReleaseData;
       console.log("getLatestRelease",getLatestRelease)
       
       
