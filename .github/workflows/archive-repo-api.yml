@@ -15,10 +15,3 @@ jobs:
           script: |
             const script = require('./\.github/workflows/repoArch.js')
             script({github, context})
-      - name: Create issue
-        uses: peter-evans/create-issue-from-file@v4
-        with:
-         title: Stale repository report
-         content-filepath: ./stale_repos.md
-         assignees: <YOUR_GITHUB_HANDLE_HERE>
-         token: ${{ secrets.GITHUB_TOKEN }}      
