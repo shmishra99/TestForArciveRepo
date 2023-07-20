@@ -1,8 +1,8 @@
 module.exports = async ({ github, context }) => {
   let arr = [];
   let eventsArr = [];
+  let numberOfDaysInactive = 90;
   for (let i = 1; i < 4; i++) {
-
     //fetch all the repos from 'tensorflow organization'
     let reposData = await github.rest.repos.listForOrg({
       org: "tensorflow",
@@ -12,39 +12,28 @@ module.exports = async ({ github, context }) => {
     const repos = reposData.data;
 
     for (let repo of repos) {
-   
-      //fetch all the event from repos present in 'tensorflow organization'
-      let eventsData = await github.rest.activity.listRepoEvents({
+     
+      // List all the pull request and issues identify pull request by 'pull_request' key sort by update_at
+      //It will also cover comment event. 
+      let listRepoIssueData = await github.rest.issues.listForRepo({
+        owner: "tensorflow",
+        repo: repo.name,
+        sort:"updated"
+      });
+      let listRepoIssue = listRepoIssueData.data[0];
+      console.log("listRepoIssueData",listRepoIssue)
+
+      //get the latest relesedata
+      let getLatestReleaseData = await github.rest.repos.getLatestRelease({
         owner: "tensorflow",
         repo: repo.name,
       });
+      let getLatestRelease = getLatestReleaseData.data[0];
+      console.log("getLatestRelease",getLatestRelease)
+      
+     
 
-      let events =eventsData.data;
-      
-      //take the last event of the repo.
-      let lastEvent = events[0];
-      
-      if(repo.name == "profiler-ui")
-        {
-         console.log("Repo no evnet",eventsData)
-        }
-       
-      if(lastEvent)
-       eventsArr.push(lastEvent);
-      else 
-        {
-         let noEvents = {
-              repo:repo.name,
-              owner: "tensorflow",
-              events:"No event"
-         } 
-         eventsArr.push(noEvents)
-        } 
     }
-    
-   //  arr.push(...reposData.data);
   }
-
-//   console.log("rep", arr.length);
-     console.log("events Arrya", eventsArr)
+  console.log("events Arrya", eventsArr);
 };
