@@ -18,12 +18,23 @@ module.exports = async ({ github, context }) => {
       });
       let events = eventsData.data;
       let lastEvent = events[0];
-      eventsArr.push(lastEvent);
+      if(!lastEvent)
+       eventsArr.push(lastEvent);
+      else 
+        {
+         let noEvents = {
+              repo:repo.name,
+              owner: "tensorflow",
+              events:"No event"
+
+         } 
+         eventsArr.push(noEvents)
+        } 
     }
     
-    arr.push(...reposData.data);
+   //  arr.push(...reposData.data);
   }
 
-  console.log("rep", arr.length);
-  console.log(eventsArr)
+//   console.log("rep", arr.length);
+     console.log(eventsArr)
 };
