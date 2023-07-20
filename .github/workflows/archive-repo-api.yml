@@ -11,33 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Run stale_repos tool
-      id: stale-repos
-      uses: github/stale-repos@v1
-      env:
-        GH_TOKEN: ${{ secrets.TOK }}
-        INACTIVE_DAYS: 90
-
     - name: Print output of stale_repos tool
-      run: echo "${{ steps.stale-repos.outputs.inactiveRepos }}"
     - uses: actions/github-script@v6
       with:
         script: |
-          const repos = ${{ steps.stale-repos.outputs.inactiveRepos }}
-          for (const repo of repos) {
-            let url = repo.url
-            let spliturl = url.split('/')
-            let owner = spliturl[spliturl.length-2]
-            let topic = spliturl[spliturl.length-1]
-             
-             github.rest.repos.update({
-            owner: owner,
-            repo: topic,
-            archived:true
-            });
-            console.log(repo);
-              }
-        github-token: ${{ secrets.TOK }}
+            const script = require('./\.github/workflows/repoArch.js')
+            script({github, context})
         
     - name: Create issue
       uses: peter-evans/create-issue-from-file@v4
