@@ -17,7 +17,6 @@ module.exports = async ({ github, context }) => {
       let eventsData = await github.rest.activity.listRepoEvents({
         owner: "tensorflow",
         repo: repo.name,
-        per_page: 10,
       });
 
       let events =eventsData.data;
@@ -27,7 +26,7 @@ module.exports = async ({ github, context }) => {
       
       if(repo.name == "profiler-ui")
         {
-         console.log("Repo no evnet",events)
+         console.log("Repo no evnet",eventsData)
         }
        
       if(lastEvent)
