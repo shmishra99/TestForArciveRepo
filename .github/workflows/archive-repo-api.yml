@@ -1,4 +1,4 @@
-name: stale repo archiver
+name: stale repo archiver API
 
 on:
   workflow_dispatch:
