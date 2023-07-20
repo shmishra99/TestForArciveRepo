@@ -1,6 +1,6 @@
 module.exports = async ({ github, context }) => {
   let inactiveRepos = [];
-  let numberOfDaysInactive = 90;
+  let numberOfDaysInactive = 9;
   
 
   for (let i = 1; i < 4; i++) {
@@ -62,8 +62,9 @@ module.exports = async ({ github, context }) => {
     
 
   }
-
     console.log("events Arrya", inactiveRepos);
+    
+
 };
 
 function timeDiffernece(updateDate) {
