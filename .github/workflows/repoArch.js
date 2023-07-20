@@ -28,7 +28,7 @@ module.exports = async ({ github, context }) => {
 
       
       let listRepoIssue = listRepoIssueData.data[0];
-      if(listRepoIssueData)
+      if(listRepoIssue)
        getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
       else 
         getTimeDiffEvent =  numberOfDaysInactive * 1000
