@@ -64,15 +64,12 @@ module.exports = async ({ github, context }) => {
   }
     console.log("events Arrya", inactiveRepos);
      
-    let templateIssue = `The following repos have not had no activity for more than 3 days:
-
-    | Repository URL | Days Inactive | Last Push Date |
-    | --- | ---: | ---: | 
-    | https://github.com/github/.github | 5 | 2020-1-30 | \n`
-
-     
+    let templateIssue = "# Inactive Repositories \n" 
+    templateIssue = templateIssue + " The following repos have not had no activity for more than"  + numberOfDaysInactive + "days:\n"
+    templateIssue = templateIssue + "| Repository URL | Days Inactive | Last Push Date |\n"
+    templateIssue = templateIssue + " | --- | ---: | ---: | "     
     for(let inactive of inactiveRepos){
-        templateIssue =   templateIssue + `| ${inactive.repo_details.html_url} | ${inactive.inactiveDays}| 2020-1-30 | \n`
+        templateIssue =   templateIssue + "| ${inactive.repo_details.html_url} | ${inactive.inactiveDays}| 2020-1-30 | \n"
 
     }
    
