@@ -17,9 +17,10 @@ module.exports = async ({ github, context }) => {
         page: i,
       });
 
-      let events = eventsData.data;
-      console.log(events)
+      let events = JSON.parse(eventsData.data);
+      // console.log(events)
       let lastEvent = events[0];
+      console.log(lastEvent)
       if(!lastEvent)
        eventsArr.push(lastEvent);
       else 
