@@ -39,7 +39,7 @@ module.exports = async ({ github, context }) => {
         let getLatestRelease = getLatestReleaseData.data;
          timeDifferneceRelese =  timeDiffernece(getLatestRelease.updated_at)
       } catch (e) {
-        timeDifferneceRelese = numberOfDaysInactive
+        timeDifferneceRelese = numberOfDaysInactive * 1000   // make it older
         console.log("no relese.",e);
       }
       
