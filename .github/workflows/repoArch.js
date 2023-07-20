@@ -39,7 +39,8 @@ module.exports = async ({ github, context }) => {
         let getLatestRelease = getLatestReleaseData.data;
          timeDifferneceRelese =  timeDiffernece(getLatestRelease.updated_at)
       } catch (e) {
-        console.log("no relese.");
+        timeDifferneceRelese = numberOfDaysInactive
+        console.log("no relese.",e);
       }
       
       if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese){
