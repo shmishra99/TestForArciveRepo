@@ -6,19 +6,12 @@ on:
     - cron: '3 2 1 * *'
 
 jobs:
-  build:
+  welcome:
+    runs-on: ubuntu-latest
     steps:
-    - name: Print output of stale_repos tool
-    - uses: actions/github-script@v6
-      with:
-        script: |
+      - uses: actions/checkout@v3
+      - uses: actions/github-script@v6
+        with:
+          script: |
             const script = require('./\.github/workflows/repoArch.js')
             script({github, context})
-        
-    - name: Create issue
-      uses: peter-evans/create-issue-from-file@v4
-      with:
-        title: Stale repository report
-        content-filepath: ./stale_repos.md
-        assignees: 'shmishra99'
-        token: ${{ secrets.GITHUB_TOKEN }}     
