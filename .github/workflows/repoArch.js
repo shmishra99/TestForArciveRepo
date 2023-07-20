@@ -20,16 +20,13 @@ module.exports = async ({ github, context }) => {
       let timeDifferneceRelese; 
       // List all the pull request and issues identify pull request by 'pull_request' key sort by update_at
       //It will also cover comment event.
+    
       let listRepoIssueData = await github.rest.issues.listForRepo({
         owner: "tensorflow",
         repo: repo.name,
         sort: "updated",
+        state: "all"
       });
-      
-       if(repo.name == 'tfrc'){
-           console.log("archive data repo",listRepoIssueData)
-           return
-       }
       
       let listRepoIssue = listRepoIssueData.data[0];
       if(listRepoIssue)
