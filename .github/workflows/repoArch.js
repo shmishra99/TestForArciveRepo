@@ -5,35 +5,36 @@ module.exports = async ({ github, context }) => {
   for (let i = 1; i < 4; i++) {
     //fetch all the repos from 'tensorflow organization'
     let reposData = await github.rest.repos.listForOrg({
-      org: "tensorflow",
+      org: "shmishra99",
       per_page: 10,
       page: i,
     });
     const repos = reposData.data;
-
+   
     for (let repo of repos) {
      
       // List all the pull request and issues identify pull request by 'pull_request' key sort by update_at
       //It will also cover comment event. 
       let listRepoIssueData = await github.rest.issues.listForRepo({
-        owner: "tensorflow",
+        owner: "shmishra99",
         repo: repo.name,
         sort:"updated"
       });
+
       let listRepoIssue = listRepoIssueData.data[0];
       console.log("listRepoIssueData",listRepoIssue)
 
       //get the latest relesedata
       let getLatestReleaseData = await github.rest.repos.getLatestRelease({
-        owner: "tensorflow",
+        owner: "shmishra99",
         repo: repo.name,
       });
       let getLatestRelease = getLatestReleaseData.data[0];
       console.log("getLatestRelease",getLatestRelease)
       
-     
+      
 
     }
   }
-  console.log("events Arrya", eventsArr);
+//   console.log("events Arrya", eventsArr);
 };
