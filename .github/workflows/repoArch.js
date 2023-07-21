@@ -27,15 +27,16 @@ module.exports = async ({ github, context }) => {
         sort: "updated",
         state: "all"
       });
+      
       let listRepoIssue = listRepoIssueData.data[0];
       if(listRepoIssue){
-      console.log("list issues",listRepoIssue)
+       console.log("list issues",listRepoIssue)
        getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
        lastActive = listRepoIssue.updated_at
       }
       else {
          lastActive = repo.created_at
-         getTimeDiffEvent =  numberOfDaysInactive * 1000
+         getTimeDiffEvent =  repo.created_at
       }     
       // fetch the last update date if it is less then 90 days then ignore else archive and continue.
       try {
@@ -44,13 +45,17 @@ module.exports = async ({ github, context }) => {
           owner: "tensorflow",
           repo: repo.name,
         });
+
         let getLatestRelease = getLatestReleaseData.data;
          timeDifferneceRelese =  timeDiffernece(getLatestRelease.created_at)
          lastActive = getLatestRelease.created_at
       } catch (e) {
-        timeDifferneceRelese = numberOfDaysInactive * 1000   // make it older
+        timeDifferneceRelese =repo.created_at   // make it older
         lastActive = repo.created_at
       }
+
+      
+
       if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese){   
            if(getTimeDiffEvent < timeDifferneceRelese)
               {
