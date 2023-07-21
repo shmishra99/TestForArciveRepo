@@ -6,7 +6,7 @@ module.exports = async ({ github, context }) => {
     //fetch all the repos from 'tensorflow organization'
     let reposData = await github.rest.repos.listForOrg({
       org: "tensorflow",
-      per_page: 100,
+      per_page: 5,
       page: i,
     });
 
@@ -29,10 +29,10 @@ module.exports = async ({ github, context }) => {
          owner: "tensorflow",
          repo: repo.name,
        });
+       console.log("line 32",listRepoCommitData.data[0])
        let listRepoCommit = listRepoCommitData.data[0];
-        
+       
        if(listRepoCommit){
-         //  console.log("list issues",listRepoIssue)
          timeDifferneceCommit = timeDiffernece(listRepoCommit.updated_at);
          lastActive["timeDifferneceCommit"] = listRepoCommit.updated_at
           
@@ -47,8 +47,6 @@ module.exports = async ({ github, context }) => {
          lastActive["timeDifferneceCommit"]= repo.created_at
       }
 
-
-    
       let listRepoIssueData = await github.rest.issues.listForRepo({
         owner: "tensorflow",
         repo: repo.name,
@@ -91,7 +89,6 @@ module.exports = async ({ github, context }) => {
               else if(timeDiffernece < timeDifferneceCommit){
               repoObj["inactiveDays"] = timeDifferneceRelese
               repoObj["lastactiveDate"] = lastActive["timeDifferneceRelese"]
-
               }
               else {
                repoObj["inactiveDays"] = timeDifferneceCommit
