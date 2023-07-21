@@ -26,7 +26,7 @@ module.exports = async ({ github, context }) => {
         sort: "updated",
         state: "all"
       });
-      console.log("Line 29.. ",listRepoIssue.updated_at )
+
       let listRepoIssue = listRepoIssueData.data[0];
       if(listRepoIssue){
          console.log("Line 29.. ",listRepoIssue.updated_at )
