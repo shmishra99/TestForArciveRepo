@@ -45,7 +45,7 @@ module.exports = async ({ github, context }) => {
           repo: repo.name,
         });
         let getLatestRelease = getLatestReleaseData.data;
-         console.log("Line 29.. ",listRepoIssue.updated_at )
+         console.log("Line 48.. ",listRepoIssue.updated_at )
          timeDifferneceRelese =  timeDiffernece(getLatestRelease.updated_at)
          lastActive = getLatestRelease.updated_at
       } catch (e) {
