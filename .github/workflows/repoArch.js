@@ -7,11 +7,11 @@ module.exports = async ({ github, context }) => {
     //fetch all the repos from 'tensorflow organization'
     let reposData = await github.rest.repos.listForOrg({
       org: "tensorflow",
-      per_page: 10,
+      per_page: 100,
       page: i,
     });
+
     const repos = reposData.data;
-    
     for (let repo of repos) {
       let repoObj  = {
          repo_details: repo,
@@ -30,7 +30,6 @@ module.exports = async ({ github, context }) => {
       if(listRepoIssue){
          console.log("Line 29.. ",listRepoIssue.updated_at )
        getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
-       console.log("")
        lastActive = listRepoIssue.updated_at
       }
       else {
