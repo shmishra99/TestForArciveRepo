@@ -32,12 +32,11 @@ module.exports = async ({ github, context }) => {
        console.log("line 32",listRepoCommitData.data[0])
        let listRepoCommit = listRepoCommitData.data[0];
        
-       if(listRepoCommit){
-         timeDifferneceCommit = timeDiffernece(listRepoCommit.updated_at);
+       if(listRepoCommit.commit && listRepoCommit.commit.committer){
+         timeDifferneceCommit = timeDiffernece(listRepoCommit.commit.committer.date);
          lastActive["timeDifferneceCommit"] = listRepoCommit.updated_at
-          
         }
-         else {
+        else {
             lastActive["timeDifferneceCommit"] = repo.created_at
             timeDifferneceCommit = timeDiffernece(repo.created_at);
          }  
