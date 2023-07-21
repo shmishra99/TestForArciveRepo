@@ -20,8 +20,31 @@ module.exports = async ({ github, context }) => {
       }
       let getTimeDiffEvent;
       let timeDifferneceRelese; 
+      let timeDifferneceCommit;
       // List all the pull request and issues identify pull request by 'pull_request' key sort by update_at
       //It will also cover comment event.
+       
+      // Last commit message 
+      let listRepoCommitData = await github.rest.repos.listCommits({
+         owner: "tensorflow",
+         repo: repo.name,
+       });
+      
+       let listRepoCommit = listRepoCommitData.data[0];
+        
+       if(listRepoCommit){
+         //  console.log("list issues",listRepoIssue)
+         timeDifferneceCommit = timeDiffernece(listRepoCommit.updated_at);
+         lastActive["timeDifferneceCommit"] = listRepoCommit.updated_at
+          
+        }
+         else {
+            lastActive["timeDifferneceCommit"] = repo.created_at
+            timeDifferneceCommit = timeDiffernece(repo.created_at);
+         }  
+
+
+    
       let listRepoIssueData = await github.rest.issues.listForRepo({
         owner: "tensorflow",
         repo: repo.name,
@@ -55,15 +78,20 @@ module.exports = async ({ github, context }) => {
         lastActive["timeDifferneceRelese"]= repo.created_at
       }
  
-      if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese){   
+      if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese && numberOfDaysInactive < timeDifferneceCommit){   
            if(getTimeDiffEvent < timeDifferneceRelese)
               {
                repoObj["inactiveDays"] = getTimeDiffEvent
                repoObj["lastactiveDate"] = lastActive["getTimeDiffEvent"]
               }
-              else {
+              else if(timeDiffernece < timeDifferneceCommit){
               repoObj["inactiveDays"] = timeDifferneceRelese
               repoObj["lastactiveDate"] = lastActive["timeDifferneceRelese"]
+
+              }
+              else {
+               repoObj["inactiveDays"] = timeDifferneceCommit
+               repoObj["lastactiveDate"] = lastActive["timeDifferneceCommit"]
               }
       }
       if(repoObj["inactiveDays"]){
