@@ -6,7 +6,7 @@ module.exports = async ({ github, context }) => {
     //fetch all the repos from 'tensorflow organization'
     let reposData = await github.rest.repos.listForOrg({
       org: "tensorflow",
-      per_page: 5,
+      per_page: 100,
       page: i,
     });
 
