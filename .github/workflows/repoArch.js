@@ -47,15 +47,14 @@ module.exports = async ({ github, context }) => {
           repo: repo.name,
         });
         let getLatestRelease = getLatestReleaseData.data;
-         console.log("Line 48.. ",getLatestRelease.updated_at )
-         timeDifferneceRelese =  timeDiffernece(getLatestRelease.updated_at)
-         lastActive = getLatestRelease.updated_at
+         console.log("Line 48.. ",getLatestRelease.created_at )
+         timeDifferneceRelese =  timeDiffernece(getLatestRelease.created_at)
+         lastActive = getLatestRelease.created_at
       } catch (e) {
-         console.log("Line 54.. ",listRepoIssue.updated_at )
+         console.log("Line 54.. ",repo.created_at )
         timeDifferneceRelese = numberOfDaysInactive * 1000   // make it older
         lastActive = repo.created_at
       }
-      
       if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese){
           
            if(getTimeDiffEvent < timeDifferneceRelese)
