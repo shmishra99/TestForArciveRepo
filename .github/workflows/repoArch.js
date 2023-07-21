@@ -23,7 +23,8 @@ module.exports = async ({ github, context }) => {
       let timeDifferneceCommit;
       // List all the pull request and issues identify pull request by 'pull_request' key sort by update_at
       //It will also cover comment event.
-       
+      
+      try{
       // Last commit message 
       let listRepoCommitData = await github.rest.repos.listCommits({
          owner: "tensorflow",
@@ -42,6 +43,11 @@ module.exports = async ({ github, context }) => {
             lastActive["timeDifferneceCommit"] = repo.created_at
             timeDifferneceCommit = timeDiffernece(repo.created_at);
          }  
+      }
+      catch(e){
+         timeDifferneceCommit =timeDiffernece(repo.created_at) 
+         lastActive["timeDifferneceCommit"]= repo.created_at
+      }
 
 
     
