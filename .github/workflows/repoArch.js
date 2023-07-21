@@ -2,7 +2,6 @@ let numberOfDaysInactive = 9;
 
 module.exports = async ({ github, context }) => {
   let inactiveRepos = []
-  let lastactiveDate;
   for (let i = 1; i < 4; i++) {
     //fetch all the repos from 'tensorflow organization'
     let reposData = await github.rest.repos.listForOrg({
@@ -68,7 +67,6 @@ module.exports = async ({ github, context }) => {
               }
       }
       if(repoObj["inactiveDays"]){
-         console.log("line 71",lastactiveDate)
          inactiveRepos.push(repoObj)
       }
     }
