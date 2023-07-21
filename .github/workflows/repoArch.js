@@ -2,7 +2,7 @@ let numberOfDaysInactive = 9;
 
 module.exports = async ({ github, context }) => {
   let inactiveRepos = []
-
+  let lastactiveDate;
   for (let i = 1; i < 4; i++) {
     //fetch all the repos from 'tensorflow organization'
     let reposData = await github.rest.repos.listForOrg({
@@ -15,7 +15,7 @@ module.exports = async ({ github, context }) => {
     
     for (let repo of repos) {
       let lastActive = {}; 
-      let lastactiveDate;
+      
       let repoObj  = {
          repo_details: repo,
       }
@@ -55,8 +55,7 @@ module.exports = async ({ github, context }) => {
         timeDifferneceRelese =timeDiffernece(repo.created_at) 
         lastActive["timeDifferneceRelese"]= repo.created_at
       }
-
-      
+ 
       if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese){   
            if(getTimeDiffEvent < timeDifferneceRelese)
               {
