@@ -1,3 +1,4 @@
+let numberOfDaysInactive = 9;
 module.exports = async ({ github, context }) => {
   let inactiveRepos = [];
   let numberOfDaysInactive = 9;
@@ -50,8 +51,7 @@ module.exports = async ({ github, context }) => {
         timeDifferneceRelese = numberOfDaysInactive * 1000   // make it older
         lastActive = repo.created_at
       }
-      if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese){
-          
+      if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese){   
            if(getTimeDiffEvent < timeDifferneceRelese)
               {
                repoObj["inactiveDays"] = getTimeDiffEvent
