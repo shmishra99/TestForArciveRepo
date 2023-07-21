@@ -32,7 +32,7 @@ module.exports = async ({ github, context }) => {
 
       let listRepoIssue = listRepoIssueData.data[0];
       if(listRepoIssue){
-       console.log("list issues",listRepoIssue)
+      //  console.log("list issues",listRepoIssue)
        getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
        lastActive["getTimeDiffEvent"] = listRepoIssue.updated_at
       }
@@ -67,20 +67,22 @@ module.exports = async ({ github, context }) => {
               lastactiveDate = lastActive["timeDifferneceRelese"]
               }
       }
-      if(repoObj["inactiveDays"])
+      if(repoObj["inactiveDays"]){
+         console.log("line 71",lastactiveDate)
          inactiveRepos.push(repoObj)
+      }
     }
   }
    createIssueWithTemplates(inactiveRepos,lastactiveDate,github)
 };
 
-async function createIssueWithTemplates(inactiveRepos,lastActive,github){
+async function createIssueWithTemplates(inactiveRepos,lastactiveDate,github){
    let templateIssue = "# Inactive Repositories \n" 
    templateIssue = templateIssue + " The following repos have not had no activity for more than "  + numberOfDaysInactive + " days:\n"
    templateIssue = templateIssue + "| Repository URL | Days Inactive | Last Active Date |\n"
    templateIssue = templateIssue + " | --- | ---: | ---: |\n"     
    for(let inactive of inactiveRepos){
-       templateIssue =   templateIssue + " | " +  inactive.repo_details.html_url + " | " +  Math.floor(inactive.inactiveDays) + " | " +  lastActive + " |\n"
+       templateIssue =   templateIssue + " | " +  inactive.repo_details.html_url + " | " +  Math.floor(inactive.inactiveDays) + " | " +  lastactiveDate + " |\n"
    } 
    await github.rest.issues.create({
      owner:'shmishra99',
