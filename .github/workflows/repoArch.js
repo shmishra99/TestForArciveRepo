@@ -13,26 +13,24 @@ module.exports = async ({ github, context }) => {
     const repos = reposData.data;
     
     for (let repo of repos) {
-
       let repoObj  = {
          repo_details: repo,
       }
       let getTimeDiffEvent;
       let timeDifferneceRelese; 
-      
       // List all the pull request and issues identify pull request by 'pull_request' key sort by update_at
       //It will also cover comment event.
-    
       let listRepoIssueData = await github.rest.issues.listForRepo({
         owner: "tensorflow",
         repo: repo.name,
         sort: "updated",
         state: "all"
       });
-      
+      console.log("Line 29.. ",listRepoIssue.updated_at )
       let listRepoIssue = listRepoIssueData.data[0];
       if(listRepoIssue){
        getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
+       console.log("")
        lastActive = listRepoIssue.updated_at
       }
       else {
@@ -47,12 +45,12 @@ module.exports = async ({ github, context }) => {
           repo: repo.name,
         });
         let getLatestRelease = getLatestReleaseData.data;
+         console.log("Line 29.. ",listRepoIssue.updated_at )
          timeDifferneceRelese =  timeDiffernece(getLatestRelease.updated_at)
          lastActive = getLatestRelease.updated_at
       } catch (e) {
         timeDifferneceRelese = numberOfDaysInactive * 1000   // make it older
         lastActive = repo.created_at
-        console.log("no relese.",e);
       }
       
       if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese){
@@ -70,7 +68,7 @@ module.exports = async ({ github, context }) => {
     
 
   }
-    console.log("events Arrya", inactiveRepos);
+   //  console.log("events Arrya", inactiveRepos);
      
     let templateIssue = "# Inactive Repositories \n" 
     templateIssue = templateIssue + " The following repos have not had no activity for more than"  + numberOfDaysInactive + "days:\n"
