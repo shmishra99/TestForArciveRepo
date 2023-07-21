@@ -36,8 +36,7 @@ module.exports = async ({ github, context }) => {
          console.log("Line 38.. ",listRepoIssue.updated_at )
          lastActive = repo.created_at
         getTimeDiffEvent =  numberOfDaysInactive * 1000
-      }
-      
+      }     
       // fetch the last update date if it is less then 90 days then ignore else archive and continue.
       try {
         //get the latest relesedata
@@ -67,22 +66,18 @@ module.exports = async ({ github, context }) => {
          inactiveRepos.push(repoObj)
     }
   }
-   createIssueWithTemplates(inactiveRepos)
-
+   createIssueWithTemplates(inactiveRepos,lastActive,github)
 };
 
-async function createIssueWithTemplates(inactiveRepos){
+async function createIssueWithTemplates(inactiveRepos,lastActive,github){
    let templateIssue = "# Inactive Repositories \n" 
    templateIssue = templateIssue + " The following repos have not had no activity for more than "  + numberOfDaysInactive + " days:\n"
    templateIssue = templateIssue + "| Repository URL | Days Inactive | Last Active Date |\n"
    templateIssue = templateIssue + " | --- | ---: | ---: |\n"     
    for(let inactive of inactiveRepos){
        templateIssue =   templateIssue + " | " +  inactive.repo_details.html_url + " | " +  Math.floor(inactive.inactiveDays) + " | " +  lastActive + " |\n"
-
-   }
-  
+   } 
    await github.rest.issues.create({
-  
      owner:'shmishra99',
      repo:'TestForArciveRepo',
      title:'Stale Repo by API',
