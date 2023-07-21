@@ -1,8 +1,7 @@
 let numberOfDaysInactive = 9;
+
 module.exports = async ({ github, context }) => {
-  let inactiveRepos = [];
-  let numberOfDaysInactive = 9;
-  let lastActive; 
+
 
   for (let i = 1; i < 4; i++) {
     //fetch all the repos from 'tensorflow organization'
@@ -13,7 +12,9 @@ module.exports = async ({ github, context }) => {
     });
 
     const repos = reposData.data;
+   
     for (let repo of repos) {
+      let lastActive = {}; 
       let repoObj  = {
          repo_details: repo,
       }
@@ -27,16 +28,16 @@ module.exports = async ({ github, context }) => {
         sort: "updated",
         state: "all"
       });
-      
+
       let listRepoIssue = listRepoIssueData.data[0];
       if(listRepoIssue){
        console.log("list issues",listRepoIssue)
        getTimeDiffEvent = timeDiffernece(listRepoIssue.updated_at);
-       lastActive = listRepoIssue.updated_at
+       lastActive["getTimeDiffEvent"] = listRepoIssue.updated_at
       }
       else {
-         lastActive = repo.created_at
-         getTimeDiffEvent =  repo.created_at
+         lastActive["getTimeDiffEvent"] = repo.created_at
+         getTimeDiffEvent = timeDiffernece(repo.created_at);
       }     
       // fetch the last update date if it is less then 90 days then ignore else archive and continue.
       try {
@@ -48,27 +49,29 @@ module.exports = async ({ github, context }) => {
 
         let getLatestRelease = getLatestReleaseData.data;
          timeDifferneceRelese =  timeDiffernece(getLatestRelease.created_at)
-         lastActive = getLatestRelease.created_at
+         lastActive["timeDifferneceRelese"]= getLatestRelease.created_at
       } catch (e) {
-        timeDifferneceRelese =repo.created_at   // make it older
-        lastActive = repo.created_at
+        timeDifferneceRelese =timeDiffernece(repo.created_at) 
+        lastActive["timeDifferneceRelese"]= repo.created_at
       }
 
-      
-
+      let lastactiveDate;
       if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese){   
            if(getTimeDiffEvent < timeDifferneceRelese)
               {
                repoObj["inactiveDays"] = getTimeDiffEvent
+               lastactiveDate = lastActive["getTimeDiffEvent"]
               }
-              else 
+              else {
               repoObj["inactiveDays"] = timeDifferneceRelese
+              lastactiveDate = lastActive["timeDifferneceRelese"]
+              }
       }
       if(repoObj["inactiveDays"])
          inactiveRepos.push(repoObj)
     }
   }
-   createIssueWithTemplates(inactiveRepos,lastActive,github)
+   createIssueWithTemplates(inactiveRepos,lastactiveDate,github)
 };
 
 async function createIssueWithTemplates(inactiveRepos,lastActive,github){
