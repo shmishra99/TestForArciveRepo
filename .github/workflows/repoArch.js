@@ -66,30 +66,30 @@ module.exports = async ({ github, context }) => {
       if(repoObj["inactiveDays"])
          inactiveRepos.push(repoObj)
     }
-    
-
   }
-   //  console.log("events Arrya", inactiveRepos);
-     
-    let templateIssue = "# Inactive Repositories \n" 
-    templateIssue = templateIssue + " The following repos have not had no activity for more than"  + numberOfDaysInactive + "days:\n"
-    templateIssue = templateIssue + "| Repository URL | Days Inactive | Last Active Date |\n"
-    templateIssue = templateIssue + " | --- | ---: | ---: |\n"     
-    for(let inactive of inactiveRepos){
-        templateIssue =   templateIssue + " | " +  inactive.repo_details.html_url + " | " +  Math.floor(inactive.inactiveDays) + " | " +  lastActive + " |\n"
-
-    }
-   
-    await github.rest.issues.create({
-   
-      owner:'shmishra99',
-      repo:'TestForArciveRepo',
-      title:'Stale Repo by API',
-      body:templateIssue
-      
-    });
+   createIssueWithTemplates(inactiveRepos)
 
 };
+
+async function createIssueWithTemplates(inactiveRepos){
+   let templateIssue = "# Inactive Repositories \n" 
+   templateIssue = templateIssue + " The following repos have not had no activity for more than "  + numberOfDaysInactive + " days:\n"
+   templateIssue = templateIssue + "| Repository URL | Days Inactive | Last Active Date |\n"
+   templateIssue = templateIssue + " | --- | ---: | ---: |\n"     
+   for(let inactive of inactiveRepos){
+       templateIssue =   templateIssue + " | " +  inactive.repo_details.html_url + " | " +  Math.floor(inactive.inactiveDays) + " | " +  lastActive + " |\n"
+
+   }
+  
+   await github.rest.issues.create({
+  
+     owner:'shmishra99',
+     repo:'TestForArciveRepo',
+     title:'Stale Repo by API',
+     body:templateIssue
+     
+   });
+}
 
 function timeDiffernece(updateDate) {
   let updateTime = new Date(updateDate).getTime();
