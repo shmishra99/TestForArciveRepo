@@ -84,7 +84,8 @@ module.exports = async ({ github, context }) => {
       }
  
       if(numberOfDaysInactive < getTimeDiffEvent && numberOfDaysInactive < timeDifferneceRelese && numberOfDaysInactive < timeDifferneceCommit){   
-           if(getTimeDiffEvent < timeDifferneceRelese)
+         console.log("Time difference: ",numberOfDaysInactive,getTimeDiffEvent,timeDifferneceRelese,timeDifferneceCommit) 
+         if(getTimeDiffEvent < timeDifferneceRelese)
               {
                repoObj["inactiveDays"] = getTimeDiffEvent
                repoObj["lastactiveDate"] = lastActive["getTimeDiffEvent"]
