@@ -9,8 +9,6 @@ module.exports = async ({ github, context }) => {
       per_page: 100,
       page: i,
     });
-
-    
     const repos = reposData.data;
     
     for (let repo of repos) {
@@ -41,11 +39,13 @@ module.exports = async ({ github, context }) => {
          lastActive["timeDifferneceCommit"] =listRepoCommit.commit.committer.date
         }
         else {
+            console.log("Else commit..  ",)
             lastActive["timeDifferneceCommit"] = repo.created_at
             timeDifferneceCommit = timeDiffernece(repo.created_at);
          }  
       }
       catch(e){
+         console.log("eror in commit",e)
          timeDifferneceCommit =timeDiffernece(repo.created_at) 
          lastActive["timeDifferneceCommit"]= repo.created_at
       }
@@ -89,7 +89,7 @@ module.exports = async ({ github, context }) => {
                repoObj["inactiveDays"] = getTimeDiffEvent
                repoObj["lastactiveDate"] = lastActive["getTimeDiffEvent"]
               }
-              else if(timeDiffernece < timeDifferneceCommit){
+              else if(timeDifferneceRelese < timeDifferneceCommit){
               repoObj["inactiveDays"] = timeDifferneceRelese
               repoObj["lastactiveDate"] = lastActive["timeDifferneceRelese"]
               }
