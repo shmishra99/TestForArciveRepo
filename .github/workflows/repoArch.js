@@ -10,10 +10,14 @@ module.exports = async ({ github, context }) => {
       page: i,
     });
 
+    
     const repos = reposData.data;
     
     for (let repo of repos) {
       let lastActive = {}; 
+
+      if(repo.name !='tfrc')
+         continue
       
       let repoObj  = {
          repo_details: repo,
