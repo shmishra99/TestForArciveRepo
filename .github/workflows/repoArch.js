@@ -1,4 +1,4 @@
-let numberOfDaysInactive = 9;
+let numberOfDaysInactive = 90;
 
 module.exports = async ({ github, context }) => {
   let inactiveRepos = []
@@ -38,7 +38,7 @@ module.exports = async ({ github, context }) => {
        
        if(listRepoCommit.commit && listRepoCommit.commit.committer){
          timeDifferneceCommit = timeDiffernece(listRepoCommit.commit.committer.date);
-         lastActive["timeDifferneceCommit"] = listRepoCommit.updated_at
+         lastActive["timeDifferneceCommit"] =listRepoCommit.commit.committer.date
         }
         else {
             lastActive["timeDifferneceCommit"] = repo.created_at
