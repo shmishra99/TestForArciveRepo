@@ -1,0 +1,32 @@
+name: Archive Repo
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '3 2 1 * *'
+jobs:
+  build:
+    name: stale repo identifier
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/github-script@v6
+      with:
+          github-token: ${{ secrets.TOK }}
+          script: |
+            
+            github.rest.repos.createOrUpdateFileContents({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            path:'./README.md',
+            message:"commit to branch message",
+            content:"Commit content.",
+            committer.name:"Shivam Mishra",
+            committer.email:"shivammishr@google.com"
+            author.name:"Shivam Mishra",
+            author.email:"shivammishr@google.com"
+             })
+
+
+            
