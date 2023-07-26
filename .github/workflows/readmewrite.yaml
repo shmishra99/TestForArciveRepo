@@ -22,10 +22,15 @@ jobs:
             path:'./README.md',
             message:"commit to branch message",
             content:"Commit content.",
-            committer.name:"Shivam Mishra",
-            committer.email:"shivammishr@google.com"
-            author.name:"Shivam Mishra",
-            author.email:"shivammishr@google.com"
+            committer:{
+            name:"Shivam Mishra",
+            email:"shivammishr@google.com"
+            }
+            author:{
+            name:"Shivam Mishra",
+            email:"shivammishr@google.com"
+            }
+            
              })
 
 
