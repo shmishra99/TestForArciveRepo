@@ -1,4 +1,4 @@
-name: Archive Repo
+name: Archive Repo-Readme
 
 on:
   workflow_dispatch:
