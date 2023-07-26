@@ -7,7 +7,7 @@ module.exports = async ({ github, context }) => {
     repo: context.repo.repo,
     path:'README.md',
     message:"commit to branch message",
-    content:"Commit content.",
+    content:"SGkgaSBhbSB3cml0aW5nIHRoZSBjb250ZW50",
     committer:{
     name:"Shivam Mishra",
     email:"shivammishr@google.com"
